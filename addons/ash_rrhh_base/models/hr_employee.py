@@ -20,6 +20,8 @@ class HrEmployee(models.Model):
     ash_fondo_cesantias = fields.Char('Fondo de cesantías', groups='hr.group_hr_user')
     ash_centro_costo = fields.Char('Centro de costo', groups='hr.group_hr_user',
                                    help='Tal como viene de Alegra. Solo informativo: aquí no hay contabilidad.')
+    ash_fecha_ingreso = fields.Date('Fecha de ingreso', groups='hr.group_hr_user')
+    ash_fecha_retiro = fields.Date('Fecha de retiro', groups='hr.group_hr_user')
     ash_id_alegra = fields.Char('ID en Alegra', index=True, copy=False, groups='hr.group_hr_user',
                                 help='Identificador del empleado en la nómina de Alegra.')
     ash_huella_alegra = fields.Char(copy=False, groups='base.group_system',

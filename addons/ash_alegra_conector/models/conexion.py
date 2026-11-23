@@ -107,6 +107,7 @@ class AshAlegraConexion(models.Model):
             'name': datos['nombre'], 'ash_id_alegra': datos['id_alegra'],
             'ash_tipo_documento': datos['tipo_documento'], 'ash_numero_documento': datos['numero_documento'],
             'ash_centro_costo': datos['centro_costo'], 'ash_huella_alegra': huella,
+            'ash_fecha_ingreso': datos['fecha_ingreso'], 'ash_fecha_retiro': datos['fecha_retiro'],
             'ash_sincronizado_el': ahora,
         }
         if datos['correo']:

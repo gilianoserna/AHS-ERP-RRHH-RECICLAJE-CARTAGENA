@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vacaciones_cargar_gestor,vacaciones cargar gestor,model_ash_vacaciones_cargar,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1
+access_vacaciones_cargar_linea_gestor,vacaciones cargar linea gestor,model_ash_vacaciones_cargar_linea,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1

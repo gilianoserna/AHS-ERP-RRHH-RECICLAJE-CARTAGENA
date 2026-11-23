@@ -12,7 +12,7 @@ Base del ERP de gestión de empleados (sin nómina: la nómina electrónica sigu
 * Parámetros laborales con fecha de vigencia (franja nocturna, tope semanal…):
   la ley cambia por etapas, así que nunca se fijan en el código.
     """,
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.1.1',
     'category': 'Human Resources',
     'author': 'ASH COLOMBIA SAS',
     'depends': ['hr', 'vp_marca', 'vp_interfaz_community'],
