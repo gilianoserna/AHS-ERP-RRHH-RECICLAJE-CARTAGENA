@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+*.env
+!*.env.ejemplo
+# CSV exportados para Alegra (no los de seguridad de los addons)
+novedades_alegra_*.csv
+.idea/
+.vscode/

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ash_alegra_conexion_form" model="ir.ui.view">
+        <field name="name">ash.alegra.conexion.form</field>
+        <field name="model">ash.alegra.conexion</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_probar" type="object" string="Probar conexión"/>
+                    <button name="action_sincronizar_empleados" type="object" string="Traer empleados ahora"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-info" role="alert" invisible="modo != 'ensayo'">
+                        Modo ensayo: no se llama a Alegra. Cámbielo a «Real» cuando el token esté configurado.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="modo" widget="radio"/>
+                            <field name="sincronizar_empleados"/>
+                            <field name="archivar_retirados"/>
+                            <field name="ultima_sincronizacion"/>
+                        </group>
+                        <group string="Credenciales" groups="base.group_system">
+                            <field name="correo"/>
+                            <field name="token" password="True"/>
+                            <field name="url_base"/>
+                            <field name="ruta_empleados"/>
+                            <field name="ruta_novedades"/>
+                        </group>
+                    </group>
+                    <field name="bitacora_ids" readonly="1">
+                        <list>
+                            <field name="create_date" string="Fecha"/>
+                            <field name="operacion"/>
+                            <field name="resultado" widget="badge"
+                                   decoration-success="resultado == 'ok'" decoration-danger="resultado == 'error'"/>
+                            <field name="creados"/>
+                            <field name="actualizados"/>
+                            <field name="sin_cambios"/>
+                            <field name="ausentes" optional="hide"/>
+                            <field name="errores" optional="show"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ash_novedad_periodo_form_alegra" model="ir.ui.view">
+        <field name="name">ash.novedad.periodo.form.alegra</field>
+        <field name="model">ash.novedad.periodo</field>
+        <field name="inherit_id" ref="ash_rrhh_novedades.ash_novedad_periodo_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_exportar_csv']" position="before">
+                <button name="action_enviar_alegra" type="object" string="Enviar a Alegra" class="btn-primary"
+                        invisible="estado not in ('aprobado', 'enviado')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_ash_alegra_conexion" model="ir.actions.act_window">
+        <field name="name">Conexión con Alegra</field>
+        <field name="res_model">ash.alegra.conexion</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_ash_alegra_conexion" name="Conexión con Alegra"
+              parent="ash_rrhh_base.menu_ash_rrhh_config" action="action_ash_alegra_conexion" sequence="60"/>
+</odoo>

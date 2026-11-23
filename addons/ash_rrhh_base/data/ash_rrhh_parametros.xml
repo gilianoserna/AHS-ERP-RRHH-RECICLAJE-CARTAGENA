@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--
+      Valores iniciales. VERIFICAR con el asesor laboral antes de producción.
+      Se editan desde Configuración > Parámetros laborales; un cambio de ley se
+      registra como una NUEVA fila con su fecha de vigencia, nunca editando la anterior.
+    -->
+    <record id="param_inicio_nocturno_2025" model="ash.rrhh.parametro">
+        <field name="clave">inicio_nocturno</field><field name="valor">21.0</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">CST art. 160 (antes de la Ley 2466 de 2025)</field>
+    </record>
+    <record id="param_inicio_nocturno_2466" model="ash.rrhh.parametro">
+        <field name="clave">inicio_nocturno</field><field name="valor">19.0</field>
+        <field name="vigente_desde">2025-12-25</field>
+        <field name="fuente">Ley 2466 de 2025</field>
+    </record>
+    <record id="param_fin_nocturno" model="ash.rrhh.parametro">
+        <field name="clave">fin_nocturno</field><field name="valor">6.0</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">CST art. 160</field>
+    </record>
+    <record id="param_jornada_44" model="ash.rrhh.parametro">
+        <field name="clave">jornada_max_semanal</field><field name="valor">44</field>
+        <field name="vigente_desde">2025-07-15</field>
+        <field name="fuente">Ley 2101 de 2021 (gradualidad)</field>
+    </record>
+    <record id="param_jornada_42" model="ash.rrhh.parametro">
+        <field name="clave">jornada_max_semanal</field><field name="valor">42</field>
+        <field name="vigente_desde">2026-07-15</field>
+        <field name="fuente">Ley 2101 de 2021 (gradualidad)</field>
+    </record>
+    <record id="param_extra_diaria" model="ash.rrhh.parametro">
+        <field name="clave">max_extra_diaria</field><field name="valor">2</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">CST art. 22 Ley 50 de 1990</field>
+    </record>
+    <record id="param_extra_semanal" model="ash.rrhh.parametro">
+        <field name="clave">max_extra_semanal</field><field name="valor">12</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">CST art. 22 Ley 50 de 1990</field>
+    </record>
+    <record id="param_descanso_minimo" model="ash.rrhh.parametro">
+        <field name="clave">descanso_minimo_horas</field><field name="valor">10</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">Política interna (ajustable)</field>
+    </record>
+    <record id="param_tolerancia" model="ash.rrhh.parametro">
+        <field name="clave">tolerancia_tardanza_min</field><field name="valor">5</field>
+        <field name="vigente_desde">2021-01-01</field>
+        <field name="fuente">Política interna (ajustable)</field>
+    </record>
+</odoo>

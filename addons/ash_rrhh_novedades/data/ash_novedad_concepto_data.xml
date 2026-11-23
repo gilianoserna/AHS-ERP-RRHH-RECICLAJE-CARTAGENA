@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Códigos de ejemplo: AJUSTAR a los conceptos creados en la nómina de Alegra. -->
+    <record id="concepto_extra_diurna" model="ash.novedad.concepto">
+        <field name="clave">extra_diurna</field>
+        <field name="codigo_alegra">HED</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_extra_nocturna" model="ash.novedad.concepto">
+        <field name="clave">extra_nocturna</field>
+        <field name="codigo_alegra">HEN</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_extra_dominical_diurna" model="ash.novedad.concepto">
+        <field name="clave">extra_dominical_diurna</field>
+        <field name="codigo_alegra">HEDDF</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_extra_dominical_nocturna" model="ash.novedad.concepto">
+        <field name="clave">extra_dominical_nocturna</field>
+        <field name="codigo_alegra">HENDF</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_ordinaria_nocturna" model="ash.novedad.concepto">
+        <field name="clave">ordinaria_nocturna</field>
+        <field name="codigo_alegra">RN</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_dominical_diurna" model="ash.novedad.concepto">
+        <field name="clave">dominical_diurna</field>
+        <field name="codigo_alegra">RDDF</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_dominical_nocturna" model="ash.novedad.concepto">
+        <field name="clave">dominical_nocturna</field>
+        <field name="codigo_alegra">RNDF</field>
+        <field name="unidad">horas</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_vacaciones" model="ash.novedad.concepto">
+        <field name="clave">vacaciones</field>
+        <field name="codigo_alegra">VAC</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_incapacidad_general" model="ash.novedad.concepto">
+        <field name="clave">incapacidad_general</field>
+        <field name="codigo_alegra">IGE</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_incapacidad_laboral" model="ash.novedad.concepto">
+        <field name="clave">incapacidad_laboral</field>
+        <field name="codigo_alegra">IRL</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_licencia_maternidad" model="ash.novedad.concepto">
+        <field name="clave">licencia_maternidad</field>
+        <field name="codigo_alegra">LMA</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_licencia_paternidad" model="ash.novedad.concepto">
+        <field name="clave">licencia_paternidad</field>
+        <field name="codigo_alegra">LPA</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_licencia_remunerada" model="ash.novedad.concepto">
+        <field name="clave">licencia_remunerada</field>
+        <field name="codigo_alegra">LR</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_licencia_no_remunerada" model="ash.novedad.concepto">
+        <field name="clave">licencia_no_remunerada</field>
+        <field name="codigo_alegra">LNR</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="concepto_ausencia_injustificada" model="ash.novedad.concepto">
+        <field name="clave">ausencia_injustificada</field>
+        <field name="codigo_alegra">AUS</field>
+        <field name="unidad">dias</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

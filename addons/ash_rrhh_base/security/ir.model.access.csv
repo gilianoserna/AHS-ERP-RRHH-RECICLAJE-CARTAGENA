@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_parametro_empleado,parametro empleado,model_ash_rrhh_parametro,group_ash_rrhh_empleado,1,0,0,0
+access_parametro_gestor,parametro gestor,model_ash_rrhh_parametro,group_ash_rrhh_gestor,1,1,1,1
+access_festivo_empleado,festivo empleado,model_ash_rrhh_festivo,group_ash_rrhh_empleado,1,0,0,0
+access_festivo_gestor,festivo gestor,model_ash_rrhh_festivo,group_ash_rrhh_gestor,1,1,1,1

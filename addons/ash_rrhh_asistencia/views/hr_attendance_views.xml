@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_list_ash" model="ir.ui.view">
+        <field name="name">hr.attendance.list.ash_rrhh</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="ash_asignacion_id" optional="show"/>
+                <field name="ash_sin_turno" optional="show"/>
+                <field name="ash_minutos_tarde" optional="show"/>
+                <field name="ash_h_ordinaria_nocturna" optional="hide" widget="float_time"/>
+                <field name="ash_h_dominical_diurna" optional="hide" widget="float_time"/>
+                <field name="ash_h_extra_diurna" optional="show" widget="float_time"/>
+                <field name="ash_h_extra_nocturna" optional="show" widget="float_time"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_form_ash" model="ir.ui.view">
+        <field name="name">hr.attendance.form.ash_rrhh</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Contra el turno" name="ash_turno">
+                    <group>
+                        <field name="ash_asignacion_id"/>
+                        <field name="ash_sin_turno"/>
+                        <field name="ash_minutos_tarde"/>
+                    </group>
+                    <group>
+                        <field name="ash_h_ordinaria_diurna" widget="float_time"/>
+                        <field name="ash_h_ordinaria_nocturna" widget="float_time"/>
+                        <field name="ash_h_dominical_diurna" widget="float_time"/>
+                        <field name="ash_h_dominical_nocturna" widget="float_time"/>
+                        <field name="ash_h_extra_diurna" widget="float_time"/>
+                        <field name="ash_h_extra_nocturna" widget="float_time"/>
+                        <field name="ash_h_extra_dominical_diurna" widget="float_time"/>
+                        <field name="ash_h_extra_dominical_nocturna" widget="float_time"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_ash_asistencia" name="Asistencia" parent="ash_rrhh_base.menu_ash_rrhh_root"
+              action="hr_attendance.hr_attendance_action" sequence="25"
+              groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+</odoo>

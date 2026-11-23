@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_form_ash" model="ir.ui.view">
+        <field name="name">hr.employee.form.ash_rrhh</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Colombia" name="ash_colombia" groups="hr.group_hr_user">
+                    <group>
+                        <group string="Identificación">
+                            <field name="ash_tipo_documento"/>
+                            <field name="ash_numero_documento"/>
+                            <field name="ash_centro_costo"/>
+                        </group>
+                        <group string="Seguridad social">
+                            <field name="ash_eps"/>
+                            <field name="ash_afp"/>
+                            <field name="ash_arl"/>
+                            <field name="ash_caja_compensacion"/>
+                            <field name="ash_fondo_cesantias"/>
+                        </group>
+                        <group string="Alegra (nómina electrónica)">
+                            <field name="ash_id_alegra"/>
+                            <field name="ash_sincronizado_el"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_search_ash" model="ir.ui.view">
+        <field name="name">hr.employee.search.ash_rrhh</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="ash_numero_documento" groups="hr.group_hr_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

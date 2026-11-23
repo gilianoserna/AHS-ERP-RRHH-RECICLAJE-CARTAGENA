@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_plantilla_empleado,plantilla empleado,model_ash_turno_plantilla,ash_rrhh_base.group_ash_rrhh_empleado,1,0,0,0
+access_plantilla_gestor,plantilla gestor,model_ash_turno_plantilla,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1
+access_rotacion_supervisor,rotacion supervisor,model_ash_turno_rotacion,ash_rrhh_base.group_ash_rrhh_supervisor,1,1,1,1
+access_rotacion_linea_supervisor,rotacion linea supervisor,model_ash_turno_rotacion_linea,ash_rrhh_base.group_ash_rrhh_supervisor,1,1,1,1
+access_asignacion_empleado,asignacion empleado,model_ash_turno_asignacion,ash_rrhh_base.group_ash_rrhh_empleado,1,0,0,0
+access_asignacion_supervisor,asignacion supervisor,model_ash_turno_asignacion,ash_rrhh_base.group_ash_rrhh_supervisor,1,1,1,1
+access_generar_supervisor,generar supervisor,model_ash_turno_generar,ash_rrhh_base.group_ash_rrhh_supervisor,1,1,1,1

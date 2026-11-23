@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_leave_type_form_ash" model="ir.ui.view">
+        <field name="name">hr.leave.type.form.ash_rrhh</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Colombia / Alegra" name="ash_colombia">
+                    <field name="ash_concepto_alegra"/>
+                    <field name="ash_requiere_soporte"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_form_ash" model="ir.ui.view">
+        <field name="name">hr.leave.form.ash_rrhh</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='holiday_status_id']" position="after">
+                <field name="ash_numero_soporte"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_ash_rrhh_permisos" name="Permisos y ausencias"
+              parent="ash_rrhh_base.menu_ash_rrhh_root" sequence="30"
+              action="hr_holidays.hr_leave_action_my"/>
+    <menuitem id="menu_ash_rrhh_permisos_aprobar" name="Por aprobar"
+              parent="ash_rrhh_base.menu_ash_rrhh_root" sequence="31"
+              action="hr_holidays.hr_leave_action_action_approve_department"
+              groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+</odoo>
