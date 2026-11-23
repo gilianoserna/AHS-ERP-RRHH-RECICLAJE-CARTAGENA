@@ -12,6 +12,8 @@
                             <field name="ash_tipo_documento"/>
                             <field name="ash_numero_documento"/>
                             <field name="ash_centro_costo"/>
+                            <field name="ash_fecha_ingreso"/>
+                            <field name="ash_fecha_retiro"/>
                         </group>
                         <group string="Seguridad social">
                             <field name="ash_eps"/>

@@ -30,6 +30,8 @@ class TestFlujoAlegra(TransactionCase):
         emp = self.env['hr.employee'].search([('ash_id_alegra', '=', '501')])
         self.assertEqual(emp.name, 'PRUEBA Alegra')
         self.assertEqual(emp.job_title, 'Operario')
+        self.assertEqual(emp.ash_fecha_ingreso, date(2025, 1, 15))
+        self.assertFalse(emp.ash_fecha_retiro)
         # Segunda pasada sin cambios: no escribe nada.
         segunda = self.conexion._sincronizar_empleados(EMPLEADOS_ALEGRA[:1])
         self.assertEqual((segunda.creados, segunda.actualizados, segunda.sin_cambios), (0, 0, 1))

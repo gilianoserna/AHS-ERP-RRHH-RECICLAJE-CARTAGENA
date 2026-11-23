@@ -12,7 +12,7 @@ Alegra es la nómina electrónica (liquida y transmite a la DIAN). Este conector
 * modo «Ensayo» (sin red, nada sale del ERP) y modo «Real»;
 * bitácora de cada ejecución; credenciales visibles solo para administradores.
     """,
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.1.1',
     'category': 'Human Resources',
     'author': 'ASH COLOMBIA SAS',
     'depends': ['ash_rrhh_novedades'],
