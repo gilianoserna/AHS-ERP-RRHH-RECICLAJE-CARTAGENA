@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_concepto_supervisor,concepto supervisor,model_ash_novedad_concepto,ash_rrhh_base.group_ash_rrhh_supervisor,1,0,0,0
+access_concepto_gestor,concepto gestor,model_ash_novedad_concepto,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1
+access_periodo_supervisor,periodo supervisor,model_ash_novedad_periodo,ash_rrhh_base.group_ash_rrhh_supervisor,1,0,0,0
+access_periodo_gestor,periodo gestor,model_ash_novedad_periodo,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1
+access_linea_supervisor,linea supervisor,model_ash_novedad_linea,ash_rrhh_base.group_ash_rrhh_supervisor,1,0,0,0
+access_linea_gestor,linea gestor,model_ash_novedad_linea,ash_rrhh_base.group_ash_rrhh_gestor,1,1,1,1
