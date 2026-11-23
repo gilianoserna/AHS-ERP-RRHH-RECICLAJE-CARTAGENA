@@ -1,0 +1,17 @@
+// Copyright ASH COLOMBIA SAS. Software propietario.
+//
+// El logotipo de la barra superior. La barra es del color principal (azul) y
+// el logotipo de ASH ERP trae las letras oscuras: sobre el azul no se leian.
+// Se le da una placa blanca redondeada, como una etiqueta, en vez de alterar
+// la imagen del Product Owner.
+.o_main_navbar .o_vp_marca_logo {
+    margin: 0 .25rem;
+    img {
+        max-height: calc(var(--o-navbar-height, 46px) - 14px);
+        max-width: 150px;
+        object-fit: contain;
+        background-color: #fff;
+        border-radius: .375rem;
+        padding: 2px 8px;
+    }
+}

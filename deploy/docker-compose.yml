@@ -1,6 +1,8 @@
 # Despliegue de PRUEBAS en la VM de Oracle Cloud.
 # Odoo escucha SOLO en 127.0.0.1: se entra por túnel SSH, sin abrir puertos
 # en la VM ni en la lista de seguridad de Oracle.
+name: ash_rrhh_pruebas
+
 services:
   db:
     image: postgres:16

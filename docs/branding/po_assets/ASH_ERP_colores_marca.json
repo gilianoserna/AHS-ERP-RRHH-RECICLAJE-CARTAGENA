@@ -1,0 +1,14 @@
+{
+  "brand": "ASH ERP",
+  "colors": {
+    "azul_principal": "#017DDB",
+    "azul_profundo": "#0150C0",
+    "celeste": "#0EB9DA",
+    "verde": "#06B13E",
+    "verde_lima": "#5BB506",
+    "amarillo_dorado": "#FAB404",
+    "naranja": "#E88C06",
+    "fucsia": "#F20296",
+    "texto": "#111111"
+  }
+}

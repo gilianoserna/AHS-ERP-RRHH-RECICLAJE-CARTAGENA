@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!--
+        ── Por que grafica y tabla dinamica van en un archivo APARTE ──
+
+        `web` quita `views/graph/**` y `views/pivot/**` de `assets_backend` y los
+        pone en `assets_backend_lazy`, asi que heredar sus plantillas desde el
+        paquete normal falla con «Missing (extension) parent templates».
+
+        ── Y por que `web.GraphView` y no `web.GraphController` ──
+
+        Los ficheros se llaman `graph_controller.xml` y `pivot_controller.xml`, y
+        los componentes `GraphController` y `PivotController`, pero las plantillas
+        se llaman **`web.GraphView`** y **`web.PivotView`**. La primera version de
+        este archivo heredaba el nombre del componente, que no existe como
+        plantilla, y lo unico que lo delataba era una linea en la consola del
+        navegador. En una vista de lista no se nota: el paquete perezoso no se
+        carga hasta que alguien abre una grafica. Se habria descubierto en
+        produccion.
+
+        Lo caza ahora una prueba de navegador que abre una grafica de verdad.
+
+        ── El ancla ──
+
+        Se ancla al renderizador y no a la condicion del `ActionHelper`: esa
+        condicion lleva comillas y negaciones dentro, y un `xpath` que la copie
+        letra a letra se rompe con cualquier reescritura del upstream. El
+        componente, en cambio, tiene que seguir estando.
+    -->
+    <t t-name="vp_interfaz_community.AvisoEnGrafica"
+       t-inherit="web.GraphView" t-inherit-mode="extension">
+        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+            <t t-if="model.useSampleModel" t-call="vp_interfaz_community.AvisoMuestra"/>
+        </xpath>
+    </t>
+
+    <t t-name="vp_interfaz_community.AvisoEnTablaDinamica"
+       t-inherit="web.PivotView" t-inherit-mode="extension">
+        <xpath expr="//t[@t-component='props.Renderer']" position="before">
+            <t t-if="model.useSampleModel" t-call="vp_interfaz_community.AvisoMuestra"/>
+        </xpath>
+    </t>
+
+</templates>

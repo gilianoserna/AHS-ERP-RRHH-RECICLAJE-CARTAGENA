@@ -6,8 +6,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 BASE=ash_rrhh_pruebas
 MODULOS=ash_alegra_conector
-# Nombre propio para no chocar con otros proyectos Docker de la misma VM.
-export COMPOSE_PROJECT_NAME=ash_rrhh_pruebas
+# El nombre del proyecto Docker (ash_rrhh_pruebas) va dentro de docker-compose.yml:
+# una variable de entorno se pierde al pasar por sudo.
 
 if ! command -v docker >/dev/null 2>&1; then
   echo ">> Instalando Docker"
@@ -42,6 +42,15 @@ proxy_mode = False
 without_demo = True
 CONF
 chmod 644 odoo.conf
+
+# Migración: la primera instalación quedó con el nombre de proyecto «deploy».
+# Se baja SOLO si sus contenedores salen de esta misma carpeta (no toca otros proyectos).
+VIEJOS=$($DOCKER ps -aq --filter label=com.docker.compose.project=deploy \
+         --filter "label=com.docker.compose.project.working_dir=$(pwd)")
+if [ -n "$VIEJOS" ]; then
+  echo ">> Retirando la instalación anterior (proyecto «deploy» de esta carpeta)"
+  $DOCKER compose -p deploy down
+fi
 
 $DOCKER compose up -d db
 sleep 8

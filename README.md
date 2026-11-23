@@ -31,6 +31,7 @@ más addons propios.
 | `ash_rrhh_turnos` | Plantillas (incluye turnos nocturnos), rotaciones, asistente de programación, publicación, sin traslapes, descanso mínimo, alerta de tope semanal | propio (Planning es Enterprise) |
 | `ash_rrhh_asistencia` | Cruza cada marcación con el turno publicado: tardanza, horas ordinarias / nocturnas / dominicales-festivas / extras | `hr_attendance` |
 | `ash_rrhh_novedades` | Periodo → calcular → aprobar (doble control) → CSV para Alegra | — |
+| `vp_marca`, `vp_interfaz_community` | Marca ASH ERP sin rastros de Odoo (logo, título, login, asistente) y sin ofertas Enterprise; copiados tal cual de ASH ERP | `web`, `mail`, `base_setup` |
 | `ash_alegra_conector` | API de Alegra: empleados (idempotente) y envío de novedades por línea; modo Ensayo sin red; bitácora | — |
 
 Detalle: [`docs/ARQUITECTURA.md`](docs/ARQUITECTURA.md) ·

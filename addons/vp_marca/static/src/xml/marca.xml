@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright ASH COLOMBIA SAS. Software propietario. -->
+<templates xml:space="preserve">
+
+    <!-- El logotipo en la barra superior, a la izquierda del nombre de la
+         aplicacion. Es el de la compañia ACTIVA en el selector (`vpMarcaLogo`,
+         en `js/marca.js`). Mientras la
+         compañia no suba el suyo, es el de ASH ERP, su valor por defecto
+         (`models/res_company.py`). En pantallas pequeñas no se pone: no cabe. -->
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='web.NavBar.AppsMenu']" position="after">
+            <a t-if="!this.ui.isSmall" href="/odoo" class="o_vp_marca_logo d-flex align-items-center px-2"
+               title="ASH ERP">
+                <img t-att-src="vpMarcaLogo" alt="ASH ERP"/>
+            </a>
+        </xpath>
+    </t>
+
+    <!-- El dialogo de sesion caducada lleva el nombre escrito en la plantilla,
+         no en el codigo: se cambia aqui. -->
+    <t t-inherit="web.SessionExpiredDialog" t-inherit-mode="extension">
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="title.translate">ASH ERP: sesión caducada</attribute>
+        </xpath>
+    </t>
+
+</templates>

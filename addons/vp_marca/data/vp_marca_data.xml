@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ojo con el asistente (`base.partner_root`): su identificador lo deja
+         marcado `noupdate` el modulo de correo, y en una ACTUALIZACION Odoo
+         se salta el registro aunque este archivo diga `noupdate="0"`. Aqui se
+         aplica al INSTALAR; en las actualizaciones lo hace
+         `vestir_asistente()` (gancho y migracion 19.0.1.2.0). -->
+    <data noupdate="0">
+
+        <!-- El asistente del sistema. Es quien firma los mensajes
+             automaticos, asi que su nombre aparece en el chatter de
+             cualquier documento: es la mencion mas visible del motor en el
+             uso diario. Solo se cambia el nombre; el usuario tecnico
+             (`base.user_root`), sus permisos y su papel no se tocan. -->
+        <record id="base.partner_root" model="res.partner">
+            <field name="name">Asistente ASH</field>
+            <!-- Y su cara: el simbolo de ASH ERP en vez del logotipo del
+                 motor, que es lo que se ve junto a cada mensaje suyo. Se usa
+                 el icono ya derivado del original del Product Owner
+                 (tools/generar_marca.py), no una imagen nueva. -->
+            <field name="image_1920" type="base64" file="vp_marca/static/description/icon.png"/>
+        </record>
+
+        <!-- El nombre de la aplicacion instalable (PWA) y del manifiesto web:
+             el motor lo lee de este parametro y, si no esta, pone «Odoo»
+             (`web/controllers/webmanifest.py:44`). Es lo que se ve al
+             instalar el ERP como aplicacion en el celular o el escritorio. -->
+        <record id="parametro_nombre_app" model="ir.config_parameter">
+            <field name="key">web.web_app_name</field>
+            <field name="value">ASH ERP</field>
+        </record>
+
+    </data>
+</odoo>

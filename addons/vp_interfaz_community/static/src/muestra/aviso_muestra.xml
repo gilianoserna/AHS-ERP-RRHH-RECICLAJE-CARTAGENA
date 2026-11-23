@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!--
+        ══════════════════════════════════════════════════════════════════════
+        EL AVISO DE DATOS DE MUESTRA
+
+        Odoo YA sabe cuando una vista esta enseñando registros inventados: cada
+        renderizador le pasa `showRibbon="...useSampleModel"` al `ActionHelper`,
+        y `action_helper.js` hasta importa un `RibbonWidget`. Pero la plantilla
+        `web.ActionHelper` NUNCA lo pinta: la señal existe y esta muerta.
+
+        ── Lo que hacia la primera version de este archivo, y por que NO servia ──
+
+        Heredaba `web.ActionHelper` y pintaba el aviso ahi. Siete pruebas
+        estructurales pasaban —`showRibbon` declarado, las cuatro vistas
+        pasandolo, la plantilla con su nombre, Odoo sin pintarla— y **el aviso no
+        aparecia en la pantalla**. No lo encontro una lectura del codigo: lo
+        encontro la primera prueba de navegador que se escribio.
+
+        La causa esta en los renderizadores:
+
+            get showNoContentHelper() {
+                const { model } = this.props.list;
+                return this.props.noContentHelp && (model.useSampleModel || !model.hasData());
+            }
+
+        `ActionHelper` solo se monta **si la accion trae `help`** (`noContentHelp`).
+        En las vistas cuya accion no define ese texto —la mayoria— no se monta
+        nada: `showRibbon` no llegaba a ningun sitio, y heredar esa plantilla no
+        pintaba nada. En grafica esta escrito aun mas claro:
+        `t-if="!model.hasData() or model.useSampleModel and props.info.noContentHelp"`.
+
+        ── Lo que se hace ahora ──
+
+        El aviso se pinta donde la condicion depende **solo** de que el modelo
+        este en modo muestra, que es la pregunta de verdad. Son CUATRO herencias
+        de plantilla —lista, kanban, grafica y tabla dinamica—, que es donde los
+        cuatro renderizadores montan sus vistas. Siguen siendo cuatro y no 210, y
+        sigue sin tocarse una linea del upstream.
+
+        Y la herencia de `web.ActionHelper` se QUITA a proposito: si se dejara,
+        una accion que si trae `help` pintaria dos avisos iguales.
+        ══════════════════════════════════════════════════════════════════════
+    -->
+
+    <!-- El texto vive en un solo sitio: cuatro copias se desincronizan. -->
+    <t t-name="vp_interfaz_community.AvisoMuestra">
+        <div class="vp_aviso_muestra" role="alert">
+            <i class="fa fa-exclamation-triangle me-2" aria-hidden="true"/>
+            <span>DATOS DE MUESTRA — NO SON DATOS REALES</span>
+        </div>
+    </t>
+
+    <t t-name="vp_interfaz_community.AvisoEnLista"
+       t-inherit="web.ListRenderer" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='showNoContentHelper']" position="before">
+            <t t-if="props.list.model.useSampleModel"
+               t-call="vp_interfaz_community.AvisoMuestra"/>
+        </xpath>
+    </t>
+
+    <t t-name="vp_interfaz_community.AvisoEnKanban"
+       t-inherit="web.KanbanRenderer" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='showNoContentHelper']" position="before">
+            <t t-if="props.list.model.useSampleModel"
+               t-call="vp_interfaz_community.AvisoMuestra"/>
+        </xpath>
+    </t>
+
+</templates>
