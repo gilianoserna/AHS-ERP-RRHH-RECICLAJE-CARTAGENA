@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- CST art. 186: 15 días hábiles de vacaciones por año de servicio.
+         Se causan 1,25 días al final de cada mes; lo no disfrutado se acumula. -->
+    <record id="plan_vacaciones_co" model="hr.leave.accrual.plan">
+        <field name="name">Vacaciones Colombia (15 días hábiles por año)</field>
+        <field name="time_off_type_id" ref="leave_vacaciones"/>
+        <field name="accrued_gain_time">end</field>
+        <field name="can_be_carryover" eval="True"/>
+        <field name="carryover_date">year_start</field>
+    </record>
+    <record id="plan_vacaciones_co_nivel" model="hr.leave.accrual.level">
+        <field name="accrual_plan_id" ref="plan_vacaciones_co"/>
+        <field name="start_count">0</field>
+        <field name="start_type">day</field>
+        <field name="added_value">1.25</field>
+        <field name="added_value_type">day</field>
+        <field name="frequency">monthly</field>
+        <field name="first_day">1</field>
+        <field name="action_with_unused_accruals">all</field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ash_vacaciones_cargar_form" model="ir.ui.view">
+        <field name="name">ash.vacaciones.cargar.form</field>
+        <field name="model">ash.vacaciones.cargar</field>
+        <field name="arch" type="xml">
+            <form string="Arrancar control de vacaciones">
+                <p class="text-muted">
+                    Para cada empleado se crea su saldo inicial (los días pendientes a la fecha de corte)
+                    y la causación automática de 1,25 días por mes (15 días hábiles por año).
+                    Desde ahí el ERP descuenta cada vacación aprobada.
+                </p>
+                <group>
+                    <field name="fecha_corte"/>
+                </group>
+                <button name="action_agregar_sin_causacion" type="object" class="btn-secondary"
+                        string="Agregar empleados que aún no tienen causación"/>
+                <field name="linea_ids">
+                    <list editable="bottom">
+                        <field name="employee_id"/>
+                        <field name="saldo_inicial"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_cargar" type="object" string="Crear saldos y causación" class="btn-primary"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_ash_vacaciones_cargar" model="ir.actions.act_window">
+        <field name="name">Arrancar control de vacaciones</field>
+        <field name="res_model">ash.vacaciones.cargar</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_ash_vacaciones_cargar" name="Arrancar control de vacaciones"
+              parent="ash_rrhh_base.menu_ash_rrhh_config" action="action_ash_vacaciones_cargar" sequence="70"/>
+    <menuitem id="menu_ash_vacaciones_saldos" name="Saldos de vacaciones"
+              parent="ash_rrhh_base.menu_ash_rrhh_root" action="hr_holidays.hr_leave_allocation_action_approve_department"
+              sequence="32" groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+</odoo>
