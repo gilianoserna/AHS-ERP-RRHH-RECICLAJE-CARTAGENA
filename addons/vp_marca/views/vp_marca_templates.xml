@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Identidad del producto en la interfaz (DEC-020).
+
+         Todo por herencia de plantillas, sin tocar un archivo del motor: es
+         la misma regla dura que el resto de addons propios y la que permite
+         seguir clonando el upstream al SHA fijado sin un solo parche.
+
+         Lo que NO se toca aqui: los avisos de licencia y copyright del
+         codigo fuente, que la LGPL-3 exige y se quedan donde estan. -->
+
+    <!-- 1. El titulo de la pestaña del navegador.
+         El original es `<title t-esc="title or 'Odoo'"/>`: cuando una
+         pantalla no fija titulo propio, cae en el del motor. -->
+    <template id="layout_titulo" inherit_id="web.layout" name="ASH ERP: título de la pestaña">
+        <xpath expr="//title" position="replace">
+            <title t-esc="title or 'ASH ERP'"/>
+        </xpath>
+    </template>
+
+    <!-- 1b. El icono de la pestaña del navegador.
+         El original es `<link ... t-att-href="x_icon or '/web/static/img/favicon.ico'"/>`:
+         cuando la pantalla no fija icono propio —que es SIEMPRE, salvo en
+         las aplicaciones instaladas como PWA— cae en el del motor. Era la
+         mencion mas persistente: se queda en la pestaña todo el dia.
+
+         Se sustituye el respaldo, no el mecanismo: si una pantalla fija su
+         `x_icon` (la PWA lo hace, `webclient_templates.xml:377`), ese sigue
+         mandando. -->
+    <template id="layout_favicon" inherit_id="web.layout" name="ASH ERP: icono de la pestaña">
+        <xpath expr="//link[@rel='shortcut icon']" position="replace">
+            <link type="image/png" rel="shortcut icon"
+                  t-att-href="x_icon or '/vp_marca/static/src/img/ash_erp_favicon.png'"/>
+        </xpath>
+    </template>
+
+    <!-- 2. El «Powered by» del portal y las paginas publicas.
+         Hay una cadena de tres herencias sobre esta plantilla —`web`, luego
+         `website`, luego `website_sale`— y cada una reemplaza el `_message`
+         con su propio reclamo y su propio enlace a la web del fabricante.
+         Perseguirlas una a una obligaria a depender de esos modulos y a
+         volver aqui cada vez que el motor añada otra.
+
+         Se corta en la raiz: esta plantilla deja de usar `_message`. Da
+         igual lo que pongan las de abajo; solo se muestra lo nuestro. -->
+    <template id="promocion_marca" inherit_id="web.brand_promotion_message"
+              name="ASH ERP: firma del producto">
+        <xpath expr="//t[@t-set='odoo_logo']" position="replace">
+            <t t-set="odoo_logo">
+                <span class="badge text-bg-light">ASH ERP</span>
+            </t>
+        </xpath>
+        <!-- Se conserva el `final_message` del original y solo se vacia la
+             parte del mensaje. Formatear con una cadena de Python normal
+             escaparia el marcado y el usuario veria las etiquetas escritas
+             en pantalla; `final_message` viene de un `t-set`, que es
+             marcado, y el `%` lo respeta. -->
+        <xpath expr="//t[@t-out]" position="replace">
+            <t t-out="final_message % (odoo_logo, '')"/>
+        </xpath>
+    </template>
+
+    <!-- 3. La pantalla de acceso. Es la primera que ve cualquiera, y la que
+         el Product Owner encontro anunciando el motor.
+
+         Desde 19.0.1.4.0 tiene la misma cara que la entrada de CONECTASH
+         (panel de Mercado Libre de ASH): la marca a la izquierda sobre azul
+         noche con la red de puntos de colores del logo, y el formulario a la
+         derecha. Asi los dos productos de ASH se ven de la misma familia.
+
+         Se reemplaza el MARCO (`web.login_layout`), no el formulario: el
+         contenido (`t-out="0"`) sigue siendo el del motor, de modo que el
+         acceso, la verificacion en dos pasos, restablecer la contraseña y el
+         selector de base siguen funcionando igual. Los estilos van con
+         `body.vp_acceso`, para no tocar el portal ni la tienda. -->
+    <template id="login_marca" inherit_id="web.login_layout" priority="30"
+              name="ASH ERP: pantalla de acceso">
+        <!-- Se reemplaza la llamada raiz entera, sea cual sea. Sin `website`
+             es `web.frontend_layout`; con `website` instalado (produccion lo
+             tiene, por la tienda) su vista `website.login_layout`, prioridad
+             20, la cambia por `website.layout` con el encabezado y el pie
+             del sitio. Por eso esta vista va con prioridad 30: se aplica
+             despues y deja la pantalla de acceso fuera del sitio web. Una
+             primera version reemplazaba solo el `div.container` y en
+             produccion no se veia (2026-11-11). -->
+        <xpath expr="t[@t-call]" position="replace">
+          <t t-call="web.frontend_layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <t t-set="body_classname" t-value="'vp_acceso'"/>
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div class="vp_acceso_pant">
+                <section class="vp_acceso_marca">
+                    <canvas class="vp_acceso_red" aria-hidden="true"/>
+                    <div class="vp_acceso_sello">
+                        <img src="/vp_marca/static/src/img/ash_erp_app_192.png" alt=""/>
+                        <div><b>ASH ERP</b><small>ASH Colombia</small></div>
+                    </div>
+                    <div class="vp_acceso_tesis">
+                        <h1>Toda tu empresa, <span>en orden</span>, en un solo lugar.</h1>
+                        <p>Ventas, facturación electrónica, inventario y contabilidad conectados, con las cifras al día y sin saltar entre programas.</p>
+                        <div class="vp_acceso_chips">
+                            <i><span style="background:#017DDB">V</span>Ventas</i>
+                            <i><span style="background:#06B13E">FE</span>Facturación DIAN</i>
+                            <i><span style="background:#FAB404;color:#1a1a1a">I</span>Inventario</i>
+                            <i><span style="background:#F20296">C</span>Contabilidad</i>
+                        </div>
+                    </div>
+                    <div class="vp_acceso_datos">
+                        <div><i>
+                            <svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg>
+                        </i><span><b>Facturas</b>electrónicas, al instante</span></div>
+                        <div><i>
+                            <svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v10l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v10"/></svg>
+                        </i><span><b>Inventario</b>existencias por bodega</span></div>
+                        <div><i>
+                            <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                        </i><span><b>Contabilidad</b>cuentas claras cada día</span></div>
+                    </div>
+                </section>
+                <main class="vp_acceso_form">
+                    <div t-attf-class="vp_acceso_caja {{login_card_classes}} o_database_list">
+                        <div t-if="vp_acceso_titulo" class="vp_acceso_titulo">
+                            <h2 t-out="vp_acceso_titulo"/>
+                            <p t-if="vp_acceso_sub" class="vp_acceso_sub" t-out="vp_acceso_sub"/>
+                        </div>
+                        <t t-out="0"/>
+                        <div class="vp_acceso_pie" t-if="not disable_footer">
+                            <t t-if="not disable_database_manager">
+                                <a href="/web/database/manager">Administrar bases de datos</a> ·
+                            </t>
+                            <span>Conexión cifrada · ASH ERP</span>
+                        </div>
+                    </div>
+                </main>
+            </div>
+          </t>
+        </xpath>
+    </template>
+
+    <!-- 3b. Titulo y subtitulo de cada pantalla que usa el marco: acceso,
+         crear cuenta y recuperar contraseña. La verificacion en dos pasos
+         trae su propio texto y se queda sin titulo. -->
+    <template id="login_marca_titulo" inherit_id="web.login"
+              name="ASH ERP: título de la pantalla de acceso">
+        <xpath expr="//t[@t-call='web.login_layout']" position="inside">
+            <t t-set="vp_acceso_titulo">Iniciar sesión</t>
+            <t t-set="vp_acceso_sub">Entra con el usuario que te asignó tu empresa.</t>
+        </xpath>
+        <!-- Sin el selector «Elija un usuario» del motor (los usuarios que
+             entraron antes en ese navegador): el PO lo vio como un error.
+             El motor oculta el formulario cuando no hay `login` y deja que
+             ese componente lo muestre; sin el, el formulario va siempre
+             visible. -->
+        <xpath expr="//owl-component[@name='web.user_switch']" position="replace"/>
+        <xpath expr="//form[@data-captcha='login']" position="attributes">
+            <attribute name="t-attf-class">oe_login_form</attribute>
+        </xpath>
+    </template>
+
+    <!-- 3c. Recuperar contraseña y registrarse (`auth_signup`).
+         El enlace «Restablecer contraseña» solo sale si el parametro
+         `auth_signup.reset_password` esta activo; lo activa el gancho y la
+         migracion 19.0.1.4.0 (ver `activar_recuperar_clave`). El registro
+         abierto depende de Ajustes → Permisos → «Registro de clientes»: si
+         esta cerrado, la pantalla dice a quien pedir el usuario en vez de
+         dejar a la persona sin salida. -->
+    <template id="login_marca_enlaces" inherit_id="auth_signup.login"
+              name="ASH ERP: recuperar contraseña y registrarse">
+        <xpath expr="//a[@t-if='reset_password_enabled']" position="replace">
+            <a t-if="reset_password_enabled" class="vp_acceso_olvido" tabindex="1"
+               t-attf-href="/web/reset_password?{{ keep_query() }}">¿Olvidaste tu contraseña?</a>
+        </xpath>
+        <xpath expr="//a[@t-if='signup_enabled']" position="replace">
+            <div class="vp_acceso_registro">
+                <t t-if="signup_enabled">
+                    ¿No tienes cuenta?
+                    <a t-attf-href="/web/signup?{{ keep_query() }}">Registrarse</a>
+                </t>
+                <t t-else="">¿No tienes usuario? Pídeselo al administrador de tu empresa.</t>
+            </div>
+        </xpath>
+    </template>
+    <template id="signup_marca_titulo" inherit_id="auth_signup.signup"
+              name="ASH ERP: título de crear cuenta">
+        <xpath expr="//t[@t-call='web.login_layout']" position="inside">
+            <t t-set="vp_acceso_titulo">Crear cuenta</t>
+            <t t-set="vp_acceso_sub">Completa tus datos para crear tu acceso.</t>
+        </xpath>
+    </template>
+    <template id="reset_marca_titulo" inherit_id="auth_signup.reset_password"
+              name="ASH ERP: título de recuperar contraseña">
+        <xpath expr="//t[@t-call='web.login_layout']" position="inside">
+            <t t-set="vp_acceso_titulo">Recuperar contraseña</t>
+            <t t-set="vp_acceso_sub" t-if="not token">Escribe tu correo y te enviamos un enlace para crear una contraseña nueva.</t>
+            <t t-set="vp_acceso_sub" t-else="">Escribe tu contraseña nueva dos veces.</t>
+        </xpath>
+    </template>
+
+    <!-- 4. La pantalla de «sin conexion». -->
+    <template id="offline_marca" inherit_id="web.webclient_offline"
+              name="ASH ERP: pantalla sin conexión">
+        <xpath expr="//p" position="replace">
+            <p>Revise su conexión de red y vuelva aquí. ASH ERP cargará en
+               cuanto vuelva a estar en línea.</p>
+        </xpath>
+        <xpath expr="//h1" position="replace">
+            <h1>Sin conexión</h1>
+        </xpath>
+    </template>
+
+    <!-- 5. El pie de los correos. Las dos plantillas de correo del motor
+         firman «Powered by Odoo» con un enlace a su web
+         (`mail/data/mail_templates_email_layouts.xml:86,160`). Se cambia el
+         enlace por el nombre del producto; el resto del pie —darse de baja,
+         datos de la compañia— se queda. -->
+    <template id="correo_marca" inherit_id="mail.mail_notification_layout"
+              name="ASH ERP: pie del correo">
+        <xpath expr="//a[contains(@href, 'odoo.com')]" position="replace">
+            <span>ASH ERP</span>
+        </xpath>
+    </template>
+    <template id="correo_ligero_marca" inherit_id="mail.mail_notification_light"
+              name="ASH ERP: pie del correo ligero">
+        <xpath expr="//a[contains(@href, 'odoo.com')]" position="replace">
+            <span>ASH ERP</span>
+        </xpath>
+    </template>
+
+    <!-- 6. El titulo de la pestaña de los reportes (facturas, remisiones...)
+         cuando se abren en el navegador: el motor cae en «Odoo Report»
+         (`web/views/report_templates.xml:16,50`). -->
+    <template id="reporte_titulo" inherit_id="web.report_layout" name="ASH ERP: título del reporte">
+        <xpath expr="//title" position="replace">
+            <title><t t-esc="title or 'ASH ERP'"/></title>
+        </xpath>
+    </template>
+    <template id="reporte_vista_previa_titulo" inherit_id="web.report_preview_layout"
+              name="ASH ERP: título de la vista previa del reporte">
+        <xpath expr="//title" position="replace">
+            <title><t t-esc="title or 'ASH ERP'"/></title>
+        </xpath>
+    </template>
+
+    <!-- 7. La pagina publica de un canal de conversacion: titulo e icono de
+         la pestaña caian en los del motor
+         (`mail/views/discuss_public_templates.xml:9-10`). -->
+    <template id="conversacion_publica_marca" inherit_id="mail.discuss_public_channel_template"
+              name="ASH ERP: conversación pública">
+        <xpath expr="//title" position="replace">
+            <title t-esc="title or 'ASH ERP'"/>
+        </xpath>
+        <xpath expr="//link[@rel='shortcut icon']" position="replace">
+            <link type="image/png" rel="shortcut icon"
+                  t-att-href="x_icon or '/vp_marca/static/src/img/ash_erp_favicon.png'"/>
+        </xpath>
+    </template>
+
+</odoo>

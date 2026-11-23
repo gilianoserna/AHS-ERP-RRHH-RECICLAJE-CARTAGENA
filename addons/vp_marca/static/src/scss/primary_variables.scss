@@ -1,0 +1,16 @@
+// Copyright ASH COLOMBIA SAS. Software propietario.
+//
+// El color principal del ERP pasa del morado del motor al azul de ASH ERP.
+//
+// Odoo declara `$o-community-color: #71639e !default;` y de ahi salen el
+// color de marca, el de accion y el de los enlaces
+// (`web/static/src/scss/primary_variables.scss:73-83`). Como es `!default`,
+// gana quien lo defina ANTES: por eso este archivo se antepone (`prepend`)
+// al paquete de variables primarias en el manifiesto.
+//
+// Azul profundo (#0150C0) y no el azul principal (#017DDB) de la paleta
+// del Product Owner (docs/branding/po_assets/ASH_ERP_colores_marca.json):
+// es el color de fondo de los botones, con texto blanco encima. El
+// principal da un contraste de 4,2:1 con el blanco, por debajo del 4,5:1
+// minimo de accesibilidad para texto normal; el profundo da 7,2:1.
+$o-community-color: #0150C0 !default;

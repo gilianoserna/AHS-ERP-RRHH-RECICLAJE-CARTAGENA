@@ -15,7 +15,7 @@ Base del ERP de gestión de empleados (sin nómina: la nómina electrónica sigu
     'version': '19.0.0.1.0',
     'category': 'Human Resources',
     'author': 'ASH COLOMBIA SAS',
-    'depends': ['hr'],
+    'depends': ['hr', 'vp_marca', 'vp_interfaz_community'],
     'data': [
         'security/ash_rrhh_groups.xml',
         'security/ir.model.access.csv',

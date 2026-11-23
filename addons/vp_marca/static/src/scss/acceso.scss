@@ -1,0 +1,142 @@
+// Copyright ASH COLOMBIA SAS. Software propietario.
+//
+// Pantalla de acceso con la cara de la entrada de CONECTASH (ver la plantilla
+// `login_marca`). Todo cuelga de `body.vp_acceso`: este archivo va en el
+// paquete del sitio publico y no debe tocar el portal ni la tienda.
+//
+// Colores: los mismos de CONECTASH para la marca (azul noche y azul de
+// accion), con el azul profundo de ASH ERP en el boton (7,2:1 con blanco).
+body.vp_acceso {
+    --vpa-noche: #0b1630;
+    --vpa-noche2: #11224a;
+    --vpa-azul: #0150C0;
+    --vpa-azul-hover: #01449f;
+    --vpa-azul2: #5aa2ff;
+    --vpa-papel: #f5f7fb;
+    --vpa-tinta: #14213d;
+    --vpa-gris: #5b6785;
+    --vpa-linea: #d9dfeb;
+    background: var(--vpa-papel) !important;
+    color: var(--vpa-tinta);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    min-height: 100%;
+    margin: 0;
+
+    #wrapwrap, main { min-height: 100%; }
+
+    .vp_acceso_pant {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+    }
+
+    // Marca (izquierda)
+    .vp_acceso_marca {
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(120% 90% at 15% 10%, var(--vpa-noche2), var(--vpa-noche) 60%);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+        padding: 44px 48px;
+        > * { position: relative; }
+        > canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    }
+    .vp_acceso_sello {
+        display: flex; align-items: center; gap: 14px;
+        img { width: 52px; height: 52px; object-fit: contain; background: #fff; border-radius: 12px; padding: 3px; }
+        b { font-weight: 800; letter-spacing: .06em; font-size: 20px; display: block; }
+        small { display: block; font-size: 12px; color: #9fb4dc; letter-spacing: .08em; text-transform: uppercase; }
+    }
+    .vp_acceso_tesis {
+        h1 { font-weight: 800; font-size: clamp(30px, 3.4vw, 46px); line-height: 1.08; margin: 0 0 16px; max-width: 15ch; color: #fff; }
+        h1 span { color: var(--vpa-azul2); }
+        p { color: #c2d0ec; font-size: 16px; line-height: 1.6; max-width: 44ch; margin: 0; }
+    }
+    .vp_acceso_chips {
+        display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+        i {
+            font-style: normal; font-size: 12.5px; font-weight: 600;
+            padding: 5px 12px 5px 5px; border-radius: 999px;
+            border: 1px solid #2c4478; background: #0e1d40cc; color: #dbe6fb;
+            display: flex; align-items: center; gap: 8px;
+        }
+        span {
+            width: 24px; height: 24px; border-radius: 50%; color: #fff;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 10px;
+        }
+    }
+    .vp_acceso_datos {
+        display: flex; gap: 28px; flex-wrap: wrap; font-size: 13px; color: #9fb4dc;
+        b { display: block; font-size: 15px; color: #fff; }
+        > div { display: flex; gap: 11px; align-items: flex-start; }
+        i {
+            width: 38px; height: 38px; border-radius: 11px; flex: none;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16);
+        }
+        svg { width: 20px; height: 20px; stroke: #cfe0ff; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    }
+
+    // Formulario (derecha)
+    .vp_acceso_form {
+        display: flex; align-items: center; justify-content: center;
+        padding: 40px 24px;
+    }
+    .vp_acceso_caja {
+        width: 100%; max-width: 380px;
+        display: flex; flex-direction: column; gap: 20px;
+    }
+    .vp_acceso_titulo h2 { font-weight: 800; font-size: 28px; margin: 0; color: var(--vpa-tinta); }
+    .vp_acceso_titulo { margin-bottom: 6px; }
+    .vp_acceso_sub { color: var(--vpa-gris); margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; }
+
+    .form-label, .col-form-label { font-size: 13px; font-weight: 600; color: var(--vpa-tinta); margin-bottom: 7px; }
+    .form-control {
+        font-size: 15px; padding: 12px 14px; border-radius: 10px;
+        border: 1px solid var(--vpa-linea); background: #fff; color: var(--vpa-tinta);
+        &:focus { outline: none; border-color: var(--vpa-azul); box-shadow: 0 0 0 3px rgba(1, 80, 192, .2); }
+    }
+    .input-group {
+        > .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        > .btn { border-radius: 0 10px 10px 0; border-color: var(--vpa-linea) !important; background: #fff; color: var(--vpa-gris); padding: 0 14px; }
+    }
+    .mb-3 { margin-bottom: 18px !important; }
+    .oe_login_buttons { padding-top: 18px !important; gap: 8px; }
+    .btn-primary {
+        font-weight: 600; font-size: 15.5px; padding: 14px; border: 0; border-radius: 10px;
+        background: var(--vpa-azul); color: #fff; width: 100%;
+        &:hover, &:focus { background: var(--vpa-azul-hover); }
+        &:focus-visible { outline: 3px solid var(--vpa-azul2); outline-offset: 2px; }
+    }
+    .btn-link, a:not(.btn) { color: var(--vpa-azul); font-weight: 600; text-decoration: none; }
+    .btn-link:hover, a:not(.btn):hover { text-decoration: underline; }
+    .alert { padding: 12px 14px; border-radius: 10px; font-size: 14px; line-height: 1.45; border: 0; }
+    .alert-danger { background: #fdecec; color: #9b1c1c; }
+    .alert-success { background: #e7f6ec; color: #17643a; }
+    .alert-info, .alert-warning { background: #fff6e0; color: #7a5200; }
+    // «¿Olvidaste tu contraseña?» al lado de la etiqueta, y el registro
+    // (o a quien pedir el usuario) debajo del boton.
+    .o_caps_lock_warning > .d-flex { align-items: baseline !important; }
+    .vp_acceso_olvido { font-size: 13px; }
+    .vp_acceso_registro { margin-top: 10px; font-size: 14px; color: var(--vpa-gris); text-align: center; }
+    .vp_acceso_pie {
+        font-size: 12px; color: var(--vpa-gris);
+        border-top: 1px solid var(--vpa-linea); padding-top: 14px;
+        a { font-weight: 500; }
+    }
+
+    @media (max-width: 820px) {
+        .vp_acceso_pant { grid-template-columns: 1fr; }
+        .vp_acceso_marca { padding: 26px 20px; gap: 20px; }
+        .vp_acceso_tesis p, .vp_acceso_datos { display: none; }
+        .vp_acceso_tesis h1 { font-size: 26px; margin: 0; }
+        .vp_acceso_chips { margin-top: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .vp_acceso_marca > canvas { display: none; }
+    }
+}

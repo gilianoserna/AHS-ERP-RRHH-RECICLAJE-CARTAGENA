@@ -1,0 +1,16 @@
+// El aviso tiene que verse SIEMPRE, tambien en un celular y tambien encima de
+// los registros inventados, que Odoo dibuja atenuados pero legibles.
+.vp_aviso_muestra {
+    display: block;
+    margin: 0 auto 1rem;
+    padding: .5rem 1rem;
+    max-width: 38rem;
+    border: 2px solid #b02a37;
+    border-radius: .35rem;
+    background-color: #f8d7da;
+    color: #58151c;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-align: center;
+    pointer-events: none;
+}
