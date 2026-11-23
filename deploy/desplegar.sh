@@ -6,6 +6,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 BASE=ash_rrhh_pruebas
 MODULOS=ash_alegra_conector
+# Al ACTUALIZAR, Odoo no actualiza las dependencias de un módulo: se listan todos los propios.
+PROPIOS=$(cd ../addons && ls -d ash_* vp_* | paste -sd, -)
 # El nombre del proyecto Docker (ash_rrhh_pruebas) va dentro de docker-compose.yml:
 # una variable de entorno se pierde al pasar por sudo.
 
@@ -57,7 +59,7 @@ sleep 8
 if $DOCKER compose run --rm odoo psql "postgresql://odoo:${PG_PASSWORD}@db/postgres" -tAc \
      "SELECT 1 FROM pg_database WHERE datname='${BASE}'" 2>/dev/null | grep -q 1; then
   echo ">> Actualizando módulos en ${BASE}"
-  $DOCKER compose run --rm odoo odoo --config=/etc/odoo/odoo.conf -d "$BASE" -u "$MODULOS" --stop-after-init
+  $DOCKER compose run --rm odoo odoo --config=/etc/odoo/odoo.conf -d "$BASE" -u "$PROPIOS" --stop-after-init
 else
   echo ">> Creando base ${BASE} e instalando ${MODULOS}"
   $DOCKER compose run --rm odoo odoo --config=/etc/odoo/odoo.conf -d "$BASE" -i "$MODULOS" \
