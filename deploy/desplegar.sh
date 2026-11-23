@@ -6,6 +6,8 @@ set -euo pipefail
 cd "$(dirname "$0")"
 BASE=ash_rrhh_pruebas
 MODULOS=ash_alegra_conector
+# Nombre propio para no chocar con otros proyectos Docker de la misma VM.
+export COMPOSE_PROJECT_NAME=ash_rrhh_pruebas
 
 if ! command -v docker >/dev/null 2>&1; then
   echo ">> Instalando Docker"
