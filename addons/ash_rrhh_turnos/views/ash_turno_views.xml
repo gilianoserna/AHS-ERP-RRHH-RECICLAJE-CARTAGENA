@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ash_turno_plantilla_list" model="ir.ui.view">
+        <field name="name">ash.turno.plantilla.list</field>
+        <field name="model">ash.turno.plantilla</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="codigo"/>
+                <field name="name"/>
+                <field name="hora_inicio" widget="float_time"/>
+                <field name="hora_fin" widget="float_time"/>
+                <field name="descanso_minutos"/>
+                <field name="duracion_horas" widget="float_time"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ash_turno_rotacion_form" model="ir.ui.view">
+        <field name="name">ash.turno.rotacion.form</field>
+        <field name="model">ash.turno.rotacion</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="dias_ciclo"/>
+                    </group>
+                    <field name="linea_ids">
+                        <list editable="bottom">
+                            <field name="secuencia" widget="handle"/>
+                            <field name="plantilla_id" placeholder="Descanso"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ash_turno_asignacion_list" model="ir.ui.view">
+        <field name="name">ash.turno.asignacion.list</field>
+        <field name="model">ash.turno.asignacion</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="estado == 'cancelado'" decoration-warning="excede_tope_semanal">
+                <field name="fecha"/>
+                <field name="employee_id"/>
+                <field name="department_id" optional="show"/>
+                <field name="plantilla_id"/>
+                <field name="inicio" optional="hide"/>
+                <field name="fin" optional="hide"/>
+                <field name="excede_tope_semanal" optional="show"/>
+                <field name="estado" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ash_turno_asignacion_form" model="ir.ui.view">
+        <field name="name">ash.turno.asignacion.form</field>
+        <field name="model">ash.turno.asignacion</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_publicar" type="object" string="Publicar" class="btn-primary"
+                            invisible="estado != 'borrador'" groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+                    <button name="action_cancelar" type="object" string="Cancelar turno"
+                            invisible="estado == 'cancelado'" groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+                    <button name="action_borrador" type="object" string="Volver a borrador"
+                            invisible="estado != 'cancelado'" groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+                    <field name="estado" widget="statusbar" statusbar_visible="borrador,publicado"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="not excede_tope_semanal">
+                        Esta semana el empleado supera la jornada máxima semanal vigente.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="fecha"/>
+                            <field name="plantilla_id"/>
+                        </group>
+                        <group>
+                            <field name="inicio"/>
+                            <field name="fin"/>
+                            <field name="excede_tope_semanal"/>
+                        </group>
+                    </group>
+                    <field name="notas" placeholder="Notas"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ash_turno_asignacion_calendar" model="ir.ui.view">
+        <field name="name">ash.turno.asignacion.calendar</field>
+        <field name="model">ash.turno.asignacion</field>
+        <field name="arch" type="xml">
+            <calendar date_start="inicio" date_stop="fin" color="employee_id" mode="week" quick_create="0">
+                <field name="employee_id" filters="1"/>
+                <field name="plantilla_id"/>
+                <field name="estado"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="ash_turno_asignacion_search" model="ir.ui.view">
+        <field name="name">ash.turno.asignacion.search</field>
+        <field name="model">ash.turno.asignacion</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="plantilla_id"/>
+                <filter name="borrador" string="Borrador" domain="[('estado', '=', 'borrador')]"/>
+                <filter name="publicado" string="Publicado" domain="[('estado', '=', 'publicado')]"/>
+                <group name="agrupar">
+                    <filter name="por_empleado" string="Empleado" context="{'group_by': 'employee_id'}"/>
+                    <filter name="por_fecha" string="Fecha" context="{'group_by': 'fecha:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ash_turno_asignacion" model="ir.actions.act_window">
+        <field name="name">Programación de turnos</field>
+        <field name="res_model">ash.turno.asignacion</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+    <record id="action_ash_turno_plantilla" model="ir.actions.act_window">
+        <field name="name">Plantillas de turno</field>
+        <field name="res_model">ash.turno.plantilla</field>
+        <field name="view_mode">list</field>
+    </record>
+    <record id="action_ash_turno_rotacion" model="ir.actions.act_window">
+        <field name="name">Rotaciones</field>
+        <field name="res_model">ash.turno.rotacion</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_ash_turnos" name="Turnos" parent="ash_rrhh_base.menu_ash_rrhh_root" sequence="20"/>
+    <menuitem id="menu_ash_turno_asignacion" name="Programación" parent="menu_ash_turnos"
+              action="action_ash_turno_asignacion" sequence="10"/>
+    <menuitem id="menu_ash_turno_generar" name="Generar desde rotación" parent="menu_ash_turnos"
+              action="action_ash_turno_generar" sequence="20" groups="ash_rrhh_base.group_ash_rrhh_supervisor"/>
+    <menuitem id="menu_ash_turno_plantilla" name="Plantillas de turno" parent="ash_rrhh_base.menu_ash_rrhh_config"
+              action="action_ash_turno_plantilla" sequence="30"/>
+    <menuitem id="menu_ash_turno_rotacion" name="Rotaciones" parent="ash_rrhh_base.menu_ash_rrhh_config"
+              action="action_ash_turno_rotacion" sequence="40"/>
+</odoo>

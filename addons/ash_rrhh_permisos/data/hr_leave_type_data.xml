@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Tipos colombianos. Duraciones legales y quién paga se manejan en Alegra;
+         aquí solo se registra la ausencia, se aprueba y se cuenta. -->
+    <record id="leave_vacaciones" model="hr.leave.type">
+        <field name="name">Vacaciones</field>
+        <field name="ash_concepto_alegra">vacaciones</field>
+        <field name="leave_validation_type">both</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_incapacidad_general" model="hr.leave.type">
+        <field name="name">Incapacidad por enfermedad general</field>
+        <field name="ash_concepto_alegra">incapacidad_general</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_incapacidad_laboral" model="hr.leave.type">
+        <field name="name">Incapacidad por accidente o enfermedad laboral</field>
+        <field name="ash_concepto_alegra">incapacidad_laboral</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_maternidad" model="hr.leave.type">
+        <field name="name">Licencia de maternidad</field>
+        <field name="ash_concepto_alegra">licencia_maternidad</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_paternidad" model="hr.leave.type">
+        <field name="name">Licencia de paternidad</field>
+        <field name="ash_concepto_alegra">licencia_paternidad</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_luto" model="hr.leave.type">
+        <field name="name">Licencia por luto</field>
+        <field name="ash_concepto_alegra">licencia_remunerada</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">manager</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_calamidad" model="hr.leave.type">
+        <field name="name">Calamidad doméstica</field>
+        <field name="ash_concepto_alegra">licencia_remunerada</field>
+        <field name="leave_validation_type">manager</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_remunerada" model="hr.leave.type">
+        <field name="name">Permiso remunerado</field>
+        <field name="ash_concepto_alegra">licencia_remunerada</field>
+        <field name="leave_validation_type">manager</field>
+        <field name="request_unit">hour</field>
+    </record>
+    <record id="leave_no_remunerada" model="hr.leave.type">
+        <field name="name">Licencia no remunerada</field>
+        <field name="ash_concepto_alegra">licencia_no_remunerada</field>
+        <field name="leave_validation_type">both</field>
+        <field name="request_unit">day</field>
+    </record>
+    <record id="leave_sindical" model="hr.leave.type">
+        <field name="name">Permiso sindical</field>
+        <field name="ash_concepto_alegra">licencia_remunerada</field>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">hour</field>
+    </record>
+    <record id="leave_cita_medica" model="hr.leave.type">
+        <field name="name">Cita médica</field>
+        <field name="ash_concepto_alegra">sin_novedad</field>
+        <field name="ash_requiere_soporte" eval="True"/>
+        <field name="leave_validation_type">manager</field>
+        <field name="request_unit">hour</field>
+    </record>
+    <record id="leave_injustificada" model="hr.leave.type">
+        <field name="name">Ausencia injustificada</field>
+        <field name="ash_concepto_alegra">ausencia_injustificada</field>
+        <field name="leave_validation_type">hr</field>
+        <field name="request_unit">day</field>
+    </record>
+</odoo>

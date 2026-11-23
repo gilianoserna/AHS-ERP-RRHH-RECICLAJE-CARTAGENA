@@ -1,0 +1,31 @@
+# Despliegue de PRUEBAS en la VM de Oracle Cloud.
+# Odoo escucha SOLO en 127.0.0.1: se entra por túnel SSH, sin abrir puertos
+# en la VM ni en la lista de seguridad de Oracle.
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${PG_PASSWORD:?falta PG_PASSWORD en .env}
+      POSTGRES_DB: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+  odoo:
+    image: odoo:19
+    restart: unless-stopped
+    depends_on: [db]
+    ports:
+      - "127.0.0.1:${ODOO_PUERTO:-8069}:8069"
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: ${PG_PASSWORD}
+    command: ["odoo", "--config=/etc/odoo/odoo.conf"]
+    volumes:
+      - ../addons:/mnt/extra-addons:ro
+      - ./odoo.conf:/etc/odoo/odoo.conf:ro
+      - odoo:/var/lib/odoo
+volumes:
+  db:
+  odoo:

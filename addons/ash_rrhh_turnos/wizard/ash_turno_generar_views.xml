@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ash_turno_generar_form" model="ir.ui.view">
+        <field name="name">ash.turno.generar.form</field>
+        <field name="model">ash.turno.generar</field>
+        <field name="arch" type="xml">
+            <form string="Generar turnos">
+                <group>
+                    <group>
+                        <field name="rotacion_id"/>
+                        <field name="fecha_desde"/>
+                        <field name="fecha_hasta"/>
+                    </group>
+                    <group>
+                        <field name="desfase_por_empleado"/>
+                        <field name="reemplazar_borradores"/>
+                    </group>
+                </group>
+                <field name="employee_ids" widget="many2many_tags"/>
+                <footer>
+                    <button name="action_generar" type="object" string="Generar en borrador" class="btn-primary"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_ash_turno_generar" model="ir.actions.act_window">
+        <field name="name">Generar turnos</field>
+        <field name="res_model">ash.turno.generar</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,68 @@
+name: CI
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  estatico:
+    name: Sintaxis y lógica pura (sin Odoo)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sintaxis Python y XML
+        run: |
+          python -m compileall -q addons tests
+          python - <<'EOF2'
+          import glob, xml.dom.minidom
+          for f in glob.glob('addons/**/*.xml', recursive=True):
+              xml.dom.minidom.parse(f)
+          EOF2
+      - name: Pruebas unitarias
+        run: python -m unittest discover -s . -p 'test_*.py' -t . -v
+
+  odoo:
+    name: Instalación y pruebas en Odoo 19 Community
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: odoo
+          # Credencial EFÍMERA del runner: la base nace y muere con el job.
+          POSTGRES_PASSWORD: odoo_ci_only
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Odoo 19 Community (upstream oficial)
+        run: |
+          git clone --depth 1 --branch 19.0 https://github.com/odoo/odoo.git /tmp/odoo
+          sudo apt-get update -q && sudo apt-get install -yq libldap2-dev libsasl2-dev
+          pip install -q -r /tmp/odoo/requirements.txt
+      - name: Instalar módulos y correr pruebas
+        run: |
+          set -o pipefail
+          python /tmp/odoo/odoo-bin --addons-path=/tmp/odoo/addons,/tmp/odoo/odoo/addons,addons \
+            -d ci --db_host=localhost --db_user=odoo --db_password=odoo_ci_only \
+            -i ash_alegra_conector --without-demo --test-enable --test-tags=ash_rrhh \
+            --stop-after-init --log-level=test 2>&1 | tee odoo.log
+          ! grep -E " (ERROR|CRITICAL) " odoo.log

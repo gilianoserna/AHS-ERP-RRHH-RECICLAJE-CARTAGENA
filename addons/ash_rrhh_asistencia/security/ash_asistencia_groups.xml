@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Los roles de ASH dan los permisos nativos de Asistencias que necesitan. -->
+    <record id="ash_rrhh_base.group_ash_rrhh_supervisor" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance_officer'))]"/>
+    </record>
+    <record id="ash_rrhh_base.group_ash_rrhh_gestor" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance_manager'))]"/>
+    </record>
+</odoo>

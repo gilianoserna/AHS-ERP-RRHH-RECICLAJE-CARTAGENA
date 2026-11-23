@@ -1,0 +1,48 @@
+name: Desplegar en VM Oracle (pruebas)
+
+# Se corre a mano desde GitHub: Actions -> "Desplegar en VM Oracle" -> Run workflow.
+# Copia el código a la VM por SSH y ejecuta deploy/desplegar.sh allí.
+# Secretos del repositorio (Settings -> Secrets and variables -> Actions):
+#   ORACLE_HOST     IP pública de la VM
+#   ORACLE_USER     usuario SSH (ubuntu u opc)
+#   ORACLE_SSH_KEY  contenido de la llave privada (.key / .pem) con la que entras
+"on":
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desplegar-oracle
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar SSH
+        env:
+          ORACLE_SSH_KEY: ${{ secrets.ORACLE_SSH_KEY }}
+          ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+        run: |
+          set -eu
+          test -n "$ORACLE_HOST" || { echo "Falta el secreto ORACLE_HOST"; exit 1; }
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$ORACLE_SSH_KEY" > ~/.ssh/oracle && chmod 600 ~/.ssh/oracle
+          ssh-keyscan -T 20 "$ORACLE_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+      - name: Copiar código a la VM
+        env:
+          DESTINO: ${{ secrets.ORACLE_USER }}@${{ secrets.ORACLE_HOST }}
+        run: |
+          set -eu
+          rsync -az --delete --exclude .git --exclude deploy/.env --exclude deploy/odoo.conf \
+            -e "ssh -i ~/.ssh/oracle" ./ "$DESTINO:ash_rrhh/"
+      - name: Instalar o actualizar
+        env:
+          DESTINO: ${{ secrets.ORACLE_USER }}@${{ secrets.ORACLE_HOST }}
+        run: ssh -i ~/.ssh/oracle "$DESTINO" 'bash ~/ash_rrhh/deploy/desplegar.sh'
+      - name: Limpiar llave
+        if: always()
+        run: rm -f ~/.ssh/oracle

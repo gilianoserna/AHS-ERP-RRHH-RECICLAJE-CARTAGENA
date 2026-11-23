@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- El empleado solo ve SUS turnos PUBLICADOS. -->
+    <record id="rule_asignacion_empleado" model="ir.rule">
+        <field name="name">Turnos: el empleado ve solo los suyos publicados</field>
+        <field name="model_id" ref="model_ash_turno_asignacion"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id), ('estado', '=', 'publicado')]</field>
+        <field name="groups" eval="[(4, ref('ash_rrhh_base.group_ash_rrhh_empleado'))]"/>
+    </record>
+    <record id="rule_asignacion_supervisor" model="ir.rule">
+        <field name="name">Turnos: supervisor ve los de sus compañías</field>
+        <field name="model_id" ref="model_ash_turno_asignacion"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('ash_rrhh_base.group_ash_rrhh_supervisor'))]"/>
+    </record>
+</odoo>
